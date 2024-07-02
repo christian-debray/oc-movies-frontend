@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Testing the OC-Movies-API</title>
+        <script src="../js/test_api.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/test_api.css" />
+    </head>
+    <body>
+        <h1>Testing the API</h1>
+        <p>Purpose of this page: test the OC-Movies-API and validate technical solutions for the OC Project #6.</p>
+        <div id="interface">
+            Get movie details:
+            <ul>
+                <li><a class="api-btn" href="http://localhost:8000/api/v1/titles/2396224">Movie 1</a></li>
+                <li><a class="api-btn" href="http://localhost:8000/api/v1/titles/2646">Movie 2</a></li>
+            </ul>
+        </div>
+        <div id="API-call-result"></div>
+
+        <template id="movie-detail-tpl">
+            <div class="movie-details">
+                <img class="pic" src=""/>
+                <div class="header">
+                    <h2></h2>
+                    <p>
+                        <span class="categories"></p>
+                        <span class="date>"></span>
+                        <span class="imdb"></span>
+                    </p>
+                </div>
+                <div class="description"></div>
+            </div>
+        </template>
+    </body>
+</html>

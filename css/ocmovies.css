@@ -1,0 +1,289 @@
+body {
+    background-color: #fff;
+    color: #000;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 24px;
+    font-weight: 200;
+    text-align: left;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+header, footer, section {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    font-size: 40px;
+}
+
+h1, h2 {
+    margin: 30px 0
+}
+
+header {
+    background-color: #61787F;
+    color: #fff;
+    background-image: url("../img/logo.png");
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: 165px 113px;
+    border: 1px solid #000000;
+}
+
+header h1 {
+    font-weight: 300
+}
+
+.btn {
+    background-color: #2D2C2C;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 25px;
+    padding: 2px 4px;
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+}
+
+.overview {
+    border: 6px solid #000000;
+    padding: 19px;
+    display: grid;
+    grid-template-areas:
+        "thumb title"
+        "thumb descr"
+        "thumb btn";
+}
+
+.overview img.movie-cover-thumbnail {
+    grid-area: thumb;
+}
+
+.overview h2 {
+    grid-area: title;
+    margin-top: 0;
+}
+
+.overview p {
+    grid-area: descr;
+}
+
+.overview .actions {
+    grid-area: btn;
+    text-align: right;
+}
+
+.overview .btn {
+    background-color: #FA0B0B;
+}
+
+.movie-list .thumbnails-list {
+    display: grid
+}
+
+.movie-gallery-thumbnail img.movie-cover-thumbnail {
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+}
+
+.movie-gallery-thumbnail > div {
+    background-color: rgba(0, 0, 0, .5);
+    position: relative;
+    z-index: 10;
+    text-align: right
+}
+
+.movie-gallery-thumbnail > div > h3 {
+    text-align: left
+}
+
+.movie-gallery-thumbnail > div > .btn {
+    font-size: 14px
+}
+
+.movie-gallery-thumbnail > div h3 {
+    text-align: left;
+    color: #fff
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown .dropdown-item {
+    border: 1px solid #000000;
+    background-color: #fff;
+    font-weight: 600;
+    list-style-type: none;
+}
+
+@media screen and (min-width: 1280px) {
+    body {
+        font-size: 28px;
+        margin: 60px 110px;
+    }
+
+    h1, h2 {
+        font-size: 48px
+    }
+
+    header, footer, section {
+        max-width: 837px;
+    }
+
+    header {
+        background-position: top 20px left 15px;
+    }
+
+    header h1 {
+        margin-left: 239px;
+        margin-top: 48px;
+        margin-bottom: 42px;
+        font-size: 40px
+    }
+
+    .overview {
+        padding: 18px 37px 17px 25px
+    }
+
+    section {
+        margin-bottom: 30px;
+    }
+
+    .overview img.movie-cover-thumbnail {
+        max-width: 227px;
+        max-height: 334px;
+    }
+
+    .overview img.movie-cover-thumbnail {
+        margin-right: 36px;
+    }
+
+    .overview h2 {
+        margin-bottom: 42px;
+    }
+
+    .overview p {
+        margin: 27px 0;
+    }
+
+    .overview .btn {
+        font-size: 24px;
+        line-height: 36px;
+        width: 166px;
+        height: 68px;
+    }
+
+    .thumbnails-list {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 42px;
+    }
+
+    .movie-gallery-thumbnail {
+        width: 252px;
+        height: 247px;
+        clip-path: rect(0 0 252px 247px);
+        position: relative
+    }
+
+    .movie-gallery-thumbnail > div {
+        margin-top: 34px;
+        padding: 17px 13px 11px 21px;
+        height: 102px;
+    }
+
+    .movie-gallery-thumbnail > div h3 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .movie-gallery-thumbnail > div .btn {
+        width: 74px;
+    }
+
+    .dropdown .dropdown-item {
+        font-size: 36px;
+        padding: 8px 19px 19px 19px;
+        width: 364px;
+        display: none;
+    }
+
+
+    .category-selector h2 {
+        display: inline-block
+    }
+
+    .dropdown {
+        margin-left: 24px;    }
+
+    .dropdown:hover {
+        position: absolute;
+        z-index: 10
+    }
+
+    .dropdown:hover .dropdown-item {
+        display: block;
+        position: relative;
+        z-index: 5
+    }
+
+    .dropdown .dropdown-item[data-selected="1"] {
+        display: block
+    }
+
+
+    .dropdown .dropdown-item[data-selected="1"]:after {
+        display: block;
+        content: '\02713';
+        color: white;
+        background-color: green;
+        border: solid 2px greenyellow;
+        border-radius: 8px;
+        width: 34px;
+        height: 34px;
+        float: right;
+        padding: 0;
+        font-size: 24px;
+        text-align: center;
+        margin-top: 12px
+    }
+
+    .dropdown .dropdown-item:hover {
+        background-color: #E7E7E7;
+        cursor: pointer
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    body {
+        font-size: 24px;
+        padding: 43px 84px;
+    }
+
+    h1, h2 {
+        font-size: 40px
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 16px;
+        padding: 43px 64px;
+    }
+
+    h1, h2 {
+        font-size: 32px
+    }
+}

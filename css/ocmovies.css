@@ -6,6 +6,7 @@ body {
     font-size: 24px;
     font-weight: 200;
     text-align: left;
+    margin: 3vh 6vw;
 }
 
 h1,
@@ -19,6 +20,11 @@ ul,
 li {
     margin: 0;
     padding: 0;
+}
+
+* {
+    transition-property: background-color, opacity;
+    transition-duration: 500ms;
 }
 
 header,
@@ -64,14 +70,12 @@ header h1 {
     text-align: center;
     align-content: center;
     text-decoration: none;
-    transition-property: "background";
 }
 
 .btn:hover,
 .btn:active {
     cursor: pointer;
     background-color: #000000;
-    transition-duration: 500ms;
 }
 
 .btn.red {
@@ -118,6 +122,22 @@ header h1 {
 
 .movie-list .actions.see-more {
     text-align: center;
+}
+
+.movie-list .actions.see-more .more {
+    display: inline-block;
+}
+
+.movie-list .actions.see-more .less {
+    display: none;
+}
+
+.movie-list.full .actions.see-more .more {
+    display: none;
+}
+
+.movie-list.full .actions.see-more .less {
+    display: inline-block;
 }
 
 .movie-gallery-thumbnail img.movie-cover-thumbnail {
@@ -177,11 +197,11 @@ header h1 {
 .dropdown:focus .dropdown-item {
     display: block;
     position: relative;
-    z-index: 5
+    z-index: 5;
 }
 
 .dropdown .dropdown-item[data-selected="1"] {
-    display: block
+    display: block;
 }
 
 .dropdown .dropdown-item[data-selected="1"]:after {
@@ -265,7 +285,6 @@ header h1 {
 @media screen and (min-width: 1025px) {
     body {
         font-size: 28px;
-        margin: 60px 110px;
     }
 
     h1,
@@ -323,7 +342,7 @@ header h1 {
     }
 
     .movie-list .actions.see-more {
-        margin-top: 42px;
+        display: none;
     }
 
     .movie-list .actions.see-more .btn {
@@ -445,7 +464,6 @@ header h1 {
 @media screen and (min-width: 481px) and (max-width: 1024px) {
     body {
         font-size: 20px;
-        margin: 43px 84px;
     }
 
     h1,
@@ -523,6 +541,10 @@ header h1 {
     }
 
     .movie-list .thumbnails-list .movie-gallery-thumbnail:nth-child(-n+4) {
+        display: block;
+    }
+
+    .movie-list.full .thumbnails-list .movie-gallery-thumbnail {
         display: block;
     }
 
@@ -721,6 +743,10 @@ header h1 {
     }
 
     .movie-list .thumbnails-list .movie-gallery-thumbnail:nth-child(-n+2) {
+        display: block;
+    }
+
+    .movie-list.full .thumbnails-list .movie-gallery-thumbnail {
         display: block;
     }
 

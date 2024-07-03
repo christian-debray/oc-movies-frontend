@@ -69,6 +69,100 @@
                 </div>
             </div>
         </section>
+        <section class="movie-list" id="category-1">
+            <h2>Catégorie 1</h2>
+            <div class="thumbnails-list">
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="movie-list" id="category-2">
+            <h2>Catégorie 2</h2>
+            <div class="thumbnails-list">
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+                <div class="movie-gallery-thumbnail">
+                    <img src="../img/movie_cover.png" class="movie-cover-thumbnail" alt="Movie Title"/>
+                    <div>
+                        <h3>Titanic</h3>
+                        <a href="" class="btn">Détails</a>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="movie-list" id="custom-category">
             <div class="category-selector">
                 <h2>Autres: </h2>
@@ -127,5 +221,34 @@
                 </div>
             </div>
         </section>
+        <div class="modal-window displayed" id="movie-details-window">
+            <div class="movie-details modal-window-content">
+                <div class="movie-header">
+                    <h2><slot name="original_title">The Big Lebowski</slot></h2>
+                    <p class="movie-meta-info">
+                        <span><slot name="year">1998</slot></span> - <span><slot name="movie-genre-list">Comedy, Crime, Sport</slot></span><br>
+                        <span>PG-<slot name="rated">13</slot></span> - <span><slot name="duration"></slot> minutes</span> <span>(<slot name="countries">USA / UK</slot>)</span><br>
+                        <span>IMDB score : <slot name="imdb_score"></slot>/10</span>
+                    </p>
+                    <p>
+                        <strong>Réalisé par:</strong><br>
+                        <slot name="directors">Joel Cohen, Ethan Cohen</slot>
+                    </p>
+                </div>
+                <img src="../img/movie_cover.png" class="movie-cover" alt="MOVIE TITLE">
+                <div class="movie-long-description">
+                    <slot name="long_description">
+                        <p>When "the dude" Lebowski is mistaken for a millionaire Lebowski, two thugs urinate on his rug to coerce him into paying a debt he knows nothing about. While attempting to gain recompense for the ruined rug from his wealthy counterpart, he accepts a one-time job with high pay-off. He enlists the help of his bowling buddy, Walter, a gun-toting Jewish-convert with anger issues. Deception leads to more trouble, and it soon seems that everyone from porn empire tycoons to nihilists want something from The Dude.</p>
+                    </slot>
+                </div>
+                <div class="movie-actors-list">
+                    <p><strong>Avec:</strong><br>
+                    <slot name="acotrs">David Huddleston, Flea, Jack Kehler, Jeff Bridges, Jimmie Dale Gilmore, John Goodman, John Turturro, Julianne Moore, Mark Pellegrino, Peter Stormare, Philip Moon, Philip Seymour Hoffman, Steve Buscemi, Tara Reid, Torsten Voges</slot>
+                </div>
+                <div class="actions">
+                    <a href="" class="btn">Fermer</a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

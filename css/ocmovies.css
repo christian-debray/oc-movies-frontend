@@ -128,6 +128,66 @@ header h1 {
     list-style-type: none;
 }
 
+.modal-window {
+    display: none
+}
+
+.modal-window.displayed {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0, .5);
+    z-index: 20
+}
+
+.modal-window-content {
+    display: block;
+    margin: 4vh auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: scroll;
+    background-color: #fff;
+    opacity: 1;
+    border: solid 6px black;
+}
+
+
+.movie-details {
+    display: grid;
+    font-weight: 300;
+}
+
+.movie-details .movie-meta-info {
+    font-weight: 600
+}
+
+.movie-details .header strong {
+    font-weight: 400
+}
+
+.movie-details .movie-header {
+    grid-area: header;
+}
+
+.movie-details .movie-cover {
+    grid-area: pic;
+}
+
+.movie-details .movie-long-description {
+    grid-area: descr;
+}
+
+.movie-details .movie-actors-list {
+    grid-area: actors;
+}
+
+.movie-details .actions {
+    grid-area: actions;
+}
+
 @media screen and (min-width: 1280px) {
     body {
         font-size: 28px;
@@ -220,7 +280,6 @@ header h1 {
         display: none;
     }
 
-
     .category-selector h2 {
         display: inline-block
     }
@@ -263,6 +322,61 @@ header h1 {
     .dropdown .dropdown-item:hover {
         background-color: #E7E7E7;
         cursor: pointer
+    }
+
+    .modal-window-content {
+        max-width: 840px;
+    }
+
+    .movie-details {
+        padding: 46px 21px;
+        font-size: 24px;
+        grid-template-areas:
+            "header pic"
+            "descr descr"
+            "actors actors"
+            "actions actions";
+        grid-template-columns: 3fr 2fr;
+    }
+    
+    .movie-details .movie-header h2 {
+        font-size: 48px;
+        margin-top: 24px;
+        margin-bottom: 0
+    }
+
+    .movie-details .movie-header .movie-meta-info {
+        margin-top: 48px
+    }
+
+    .movie-details .movie-header p {
+        margin-bottom: 48px
+    }
+    
+    .movie-details .movie-cover {
+        width: 100%;
+        justify-self: right;
+    }
+    
+    .movie-details .movie-long-description {
+        margin-top: 48px;
+    }
+    
+    .movie-details .movie-actors-list {
+        font-size: 20px;
+        margin-top: 48px
+    }
+    
+    .movie-details .actions {
+        margin-top: 48px;
+        text-align: center;
+    }
+
+    .movie-details .actions .btn {
+        background-color: #FA0B0B;
+        color: #fff;
+        height: 36px;
+        width: 214px;
     }
 }
 

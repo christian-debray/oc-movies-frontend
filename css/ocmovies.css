@@ -1,0 +1,887 @@
+body {
+    background-color: #fff;
+    color: #000;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 24px;
+    font-weight: 200;
+    text-align: left;
+    margin: 3vh 6vw;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    transition-property: background-color, opacity;
+    transition-duration: 500ms;
+}
+
+header,
+footer,
+section {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    font-size: 40px;
+}
+
+h1,
+h2 {
+    margin: 30px 0
+}
+
+header {
+    background-color: #61787F;
+    color: #fff;
+    background-image: url("../img/logo.png");
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: auto 80%;
+    border: 1px solid #000000;
+}
+
+header h1 {
+    font-weight: 300
+}
+
+.btn {
+    background-color: #2D2C2C;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 25px;
+    padding: 2px 4px;
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+}
+
+.btn:hover,
+.btn:active {
+    cursor: pointer;
+    background-color: #000000;
+}
+
+.btn.red {
+    background-color: #FA0B0B;
+    color: #fff
+}
+
+.btn.red:hover,
+.btn.red:active {
+    background-color: #b81616;
+}
+
+.overview {
+    border: 6px solid #000000;
+    padding: 19px;
+    display: grid;
+    grid-template-areas:
+        "thumb title"
+        "thumb descr"
+        "thumb btn";
+}
+
+.overview img.movie-cover-thumbnail {
+    grid-area: thumb;
+}
+
+.overview h2 {
+    grid-area: title;
+    margin-top: 0;
+}
+
+.overview p {
+    grid-area: descr;
+}
+
+.overview .actions {
+    grid-area: btn;
+    text-align: right;
+}
+
+.movie-list .thumbnails-list {
+    display: grid
+}
+
+.movie-list .actions.see-more {
+    text-align: center;
+}
+
+.movie-list .actions.see-more .more {
+    display: inline-block;
+}
+
+.movie-list .actions.see-more .less {
+    display: none;
+}
+
+.movie-list.full .actions.see-more .more {
+    display: none;
+}
+
+.movie-list.full .actions.see-more .less {
+    display: inline-block;
+}
+
+.movie-gallery-thumbnail img.movie-cover-thumbnail {
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+}
+
+.movie-gallery-thumbnail>div {
+    background-color: rgba(0, 0, 0, .5);
+    position: relative;
+    z-index: 10;
+    text-align: right
+}
+
+.movie-gallery-thumbnail>div>h3 {
+    text-align: left
+}
+
+.movie-gallery-thumbnail>div>.btn {
+    font-size: 14px
+}
+
+.movie-gallery-thumbnail>div h3 {
+    text-align: left;
+    color: #fff
+}
+
+.category-selector h2 {
+    display: inline-block
+}
+
+.dropdown {
+    display: inline-block;
+    padding: 2px;
+}
+
+.dropdown .dropdown-item {
+    border: 1px solid #000000;
+    background-color: #fff;
+    font-weight: 600;
+    list-style-type: none;
+    display: none;
+}
+
+.dropdown:hover,
+.dropdown:focus {
+    position: absolute;
+    z-index: 10;
+    max-height: 40vh;
+    overflow-y: scroll;
+}
+
+.dropdown:hover .dropdown-item,
+.dropdown:focus .dropdown-item {
+    display: block;
+    position: relative;
+    z-index: 5;
+}
+
+.dropdown .dropdown-item[data-selected="1"] {
+    display: block;
+}
+
+.dropdown .dropdown-item[data-selected="1"]:after {
+    display: block;
+    content: "✅";
+    float: right;
+    margin-left: 24px;
+}
+
+.dropdown .dropdown-item:hover,
+.dropdown .dropdown-item:focus {
+    background-color: #E7E7E7;
+    cursor: pointer
+}
+
+.modal-window {
+    display: none
+}
+
+.modal-window.displayed {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 20
+}
+
+.modal-window-content {
+    display: block;
+    margin: 4vh auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: scroll;
+    background-color: #fff;
+    opacity: 1;
+    border: solid 6px black;
+}
+
+.modal-window .close.handheld {
+    display: none
+}
+
+.movie-details {
+    padding: 6vh 3vw;
+    display: grid;
+    font-weight: 300;
+}
+
+.movie-details .movie-meta-info {
+    font-weight: 600
+}
+
+.movie-details .header strong {
+    font-weight: 400
+}
+
+.movie-details .movie-header {
+    grid-area: header;
+}
+
+.movie-details .movie-cover {
+    grid-area: pic;
+}
+
+.movie-details .movie-long-description {
+    grid-area: descr;
+}
+
+.movie-details .movie-actors-list {
+    grid-area: actors;
+}
+
+.movie-details .actions {
+    grid-area: actions;
+}
+
+/* *************** Desktop  *************** */
+@media screen and (min-width: 1025px) {
+    body {
+        font-size: 28px;
+    }
+
+    h1,
+    h2 {
+        font-size: 48px
+    }
+
+    header,
+    footer,
+    section {
+        max-width: 837px;
+    }
+
+    header {
+        background-position: top 27px left 16px;
+    }
+
+    header h1 {
+        margin-left: 239px;
+        margin-top: 48px;
+        margin-bottom: 42px;
+        font-size: 40px
+    }
+
+    .overview {
+        padding: 18px 37px 17px 25px
+    }
+
+    section {
+        margin-bottom: 30px;
+    }
+
+    .overview img.movie-cover-thumbnail {
+        max-width: 227px;
+        max-height: 334px;
+    }
+
+    .overview img.movie-cover-thumbnail {
+        margin-right: 36px;
+    }
+
+    .overview h2 {
+        margin-bottom: 42px;
+    }
+
+    .overview p {
+        margin: 27px 0;
+    }
+
+    .overview .btn {
+        font-size: 24px;
+        line-height: 36px;
+        width: 158px;
+        height: 64px;
+    }
+
+    .movie-list .actions.see-more {
+        display: none;
+    }
+
+    .movie-list .actions.see-more .btn {
+        width: 226px;
+        height: 42px
+    }
+
+    .thumbnails-list {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 42px;
+    }
+
+    .movie-list .thumbnails-list .movie-gallery-thumbnail {
+        display: none;
+    }
+
+    .movie-list .thumbnails-list .movie-gallery-thumbnail:nth-child(-n+6) {
+        display: block;
+    }
+
+    .movie-gallery-thumbnail {
+        width: 252px;
+        height: 247px;
+        clip-path: rect(0 0 252px 247px);
+        position: relative
+    }
+
+    .movie-gallery-thumbnail>div {
+        margin-top: 34px;
+        padding: 17px 13px 11px 21px;
+        height: 102px;
+    }
+
+    .movie-gallery-thumbnail>div h3 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .movie-gallery-thumbnail>div .btn {
+        width: 74px;
+    }
+
+    .dropdown {
+        margin-left: 24px;
+    }
+
+    .dropdown:hover,
+    .dropdown:focus {
+        max-height: calc(82px*4)
+    }
+
+    .dropdown .dropdown-item {
+        font-size: 36px;
+        padding: 8px 19px 19px 19px;
+        min-width: 364px;
+    }
+
+    .dropdown .dropdown-item[data-selected="1"]:after {
+        font-size: 36px;
+        margin-top: 2px;
+    }
+
+    .modal-window-content {
+        max-width: 840px;
+        max-height: 80vh;
+    }
+
+    .movie-details {
+        font-size: 24px;
+        grid-template-columns: 3fr 2fr;
+        grid-template-areas:
+            "header pic"
+            "descr descr"
+            "actors actors"
+            "actions actions";
+    }
+
+    .movie-details .movie-header h2 {
+        font-size: 48px;
+        margin-top: 24px;
+        margin-bottom: 0
+    }
+
+    .movie-details .movie-header .movie-meta-info {
+        margin-top: 48px
+    }
+
+    .movie-details .movie-header p {
+        margin-bottom: 48px
+    }
+
+    .movie-details .movie-cover {
+        width: 100%;
+        justify-self: right;
+    }
+
+    .movie-details .movie-long-description {
+        margin-top: 48px;
+    }
+
+    .movie-details .movie-actors-list {
+        font-size: 20px;
+        margin-top: 48px
+    }
+
+    .movie-details .actions {
+        margin-top: 48px;
+        text-align: center;
+    }
+
+    .movie-details .actions .btn {
+        height: 36px;
+        width: 214px;
+    }
+}
+
+/* *************** Tablet  *************** */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+
+    h1,
+    h2 {
+        font-size: 40px
+    }
+
+    header,
+    footer,
+    section {
+        max-width: 619px;
+    }
+
+    header {
+        background-position: top 20px left 15px;
+    }
+
+    header h1 {
+        margin-left: 239px;
+        margin-top: 48px;
+        margin-bottom: 42px;
+        font-size: 40px
+    }
+
+    .overview {
+        padding: 13px 34px 12px 19px
+    }
+
+    section {
+        margin-bottom: 30px;
+    }
+
+    .overview img.movie-cover-thumbnail {
+        max-width: 168px;
+        max-height: 246px;
+    }
+
+    .overview img.movie-cover-thumbnail {
+        margin-right: 26px;
+    }
+
+    .overview h2 {
+        margin-bottom: 0px;
+    }
+
+    .overview p {
+        margin: 0px 0;
+    }
+
+    .overview .btn {
+        font-size: 20px;
+        line-height: 36px;
+        width: 119px;
+        height: 41px;
+    }
+
+    .movie-list .actions.see-more {
+        margin-top: 42px;
+    }
+
+    .movie-list .actions.see-more .btn {
+        width: 206px;
+        height: 32px
+    }
+
+
+    .thumbnails-list {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 36px;
+    }
+
+    .movie-list .thumbnails-list .movie-gallery-thumbnail {
+        display: none;
+    }
+
+    .movie-list .thumbnails-list .movie-gallery-thumbnail:nth-child(-n+4) {
+        display: block;
+    }
+
+    .movie-list.full .thumbnails-list .movie-gallery-thumbnail {
+        display: block;
+    }
+
+    .movie-gallery-thumbnail {
+        width: 296px;
+        height: 286px;
+        clip-path: rect(0 0 296px 286px);
+        position: relative
+    }
+
+    .movie-gallery-thumbnail>div {
+        margin-top: 39px;
+        padding: 20px 15px 12px 24px;
+        height: 86px;
+    }
+
+    .movie-gallery-thumbnail>div h3 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .movie-gallery-thumbnail>div .btn {
+        width: 74px;
+    }
+
+    .dropdown {
+        margin-left: 18px;
+    }
+
+    .dropdown:hover,
+    .dropdown:focus {
+        max-height: calc(67px*4)
+    }
+
+    .dropdown .dropdown-item {
+        font-size: 36px;
+        padding: 6px 11px;
+        min-width: 300px;
+    }
+
+    .dropdown .dropdown-item[data-selected="1"]:after {
+        font-size: 24px;
+        margin-top: 8px;
+    }
+
+    .modal-window-content {
+        max-width: 90vw;
+        max-height: 80vh;
+    }
+
+    .modal-window .close.handheld {
+        display: block;
+        position: absolute;
+        top: 6vh;
+        right: 5vw;
+        z-index: 50;
+        background-color: #fff;
+        padding: 2px
+    }
+
+    .modal-window .close.handheld:hover {
+        cursor: pointer;
+    }
+
+    .movie-details {
+        font-size: 24px;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "descr"
+            "pic"
+            "actors";
+    }
+
+    .movie-details .movie-header h2 {
+        font-size: 48px;
+        margin-top: 0;
+        margin-bottom: 0
+    }
+
+    .movie-details .movie-header .movie-meta-info {
+        margin-top: 0px
+    }
+
+    .movie-details .movie-header p {
+        margin-bottom: 24px
+    }
+
+    .movie-details .movie-cover {
+        width: auto;
+        max-height: 602px; 
+        justify-self: center;
+        margin-top: 24px;
+    }
+
+    .movie-details .movie-long-description {
+        margin-top: 24px;
+    }
+
+    .movie-details .movie-actors-list {
+        font-size: 20px;
+        margin-top: 24px
+    }
+
+    .movie-details .actions {
+        display: none
+    }
+}
+
+/* ************ Smartphone **************** */
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 16px;
+        margin: 24px 8px;
+    }
+
+    h1,
+    h2 {
+        font-size: 32px
+    }
+
+    header,
+    footer,
+    section {
+        width: 75vw;
+        max-width: 329px;
+    }
+
+    header {
+        background-position: center center;
+        height: 137px;
+        padding: 0;
+    }
+
+    header h1 {
+        display: none;
+    }
+
+    .overview {
+        padding: 16px 14px
+    }
+
+    section {
+        margin-bottom: 26px;
+    }
+
+    .overview {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "thumb"
+            "title"
+            "descr"
+            "btn";
+        gap: 16px
+    }
+
+    .overview img.movie-cover-thumbnail {
+        max-width: 298px;
+        max-height: 241px;
+        object-fit: cover;
+    }
+
+    .overview h2 {
+        margin-bottom: 0px;
+    }
+
+    .overview p {
+        margin: 0px 0;
+    }
+
+    .overview .btn {
+        font-size: 14px;
+        width: 75px;
+        height: 32px;
+    }
+
+    .movie-list .actions.see-more {
+        margin-top: 42px;
+    }
+
+    .movie-list .actions.see-more .btn {
+        font-size: 20px;
+        width: 198px;
+        height: 28px;
+    }
+
+
+    .thumbnails-list {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .movie-list .thumbnails-list .movie-gallery-thumbnail {
+        display: none;
+    }
+
+    .movie-list .thumbnails-list .movie-gallery-thumbnail:nth-child(-n+2) {
+        display: block;
+    }
+
+    .movie-list.full .thumbnails-list .movie-gallery-thumbnail {
+        display: block;
+    }
+
+    .movie-gallery-thumbnail {
+        width: 100%;
+        height: 318px;
+        clip-path: rect(0 0 100% 318px);
+        position: relative
+    }
+
+    .movie-gallery-thumbnail>div {
+        margin-top: 43px;
+        padding: 22px 27px;
+    }
+
+    .movie-gallery-thumbnail>div h3 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    .movie-gallery-thumbnail>div .btn {
+        width: 98px;
+    }
+
+    .category-selector {
+        position: relative;
+        height: 65px;
+        width: 100%;
+        margin-bottom: 24px;
+    }
+
+    .category-selector h2 {
+        visibility: hidden
+    }
+
+    .dropdown {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
+    }
+
+    .dropdown .dropdown-item[data-selected="1"]:after {
+        content: "▼";
+        font-size: 36px;
+        margin-top: 0px;
+    }
+
+    .dropdown:hover,
+    .dropwdown:active,
+    .dropdown:focus {
+        max-height: calc(67px*4);
+    }
+
+    .dropdown .dropdown-item {
+        font-size: 32px;
+        padding: 6px 11px;
+        min-width: 250px;
+    }
+
+    .dropdown:hover .dropdown-item,
+    .dropdown:active .dropdown-item,
+    .dropdown:focus .dropdown-item {
+        display: block;
+    }
+
+    .dropdown:hover .dropdown-item[data-selected="1"]:after,
+    .dropwdown:active .dropdown-item[data-selected="1"]:after,
+    .dropdown:focus .dropdown-item[data-selected="1"]:after {
+        content: "✅";
+        font-size: 24px;
+        margin-top: 8px;
+    }
+
+    .modal-window-content {
+        max-width: 90vw;
+        max-height: 80vh;
+    }
+
+    .modal-window .close.handheld {
+        display: block;
+        position: absolute;
+        top: 6vh;
+        right: 5vw;
+        z-index: 50;
+        background-color: #fff;
+        padding: 2px
+    }
+
+    .modal-window .close.handheld:hover {
+        cursor: pointer;
+    }
+
+    .movie-details {
+        font-size: 24px;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "descr"
+            "pic"
+            "actors";
+    }
+
+    .movie-details .movie-header h2 {
+        font-size: 48px;
+        margin-top: 0;
+        margin-bottom: 0
+    }
+
+    .movie-details .movie-header .movie-meta-info {
+        margin-top: 0px
+    }
+
+    .movie-details .movie-header p {
+        margin-bottom: 24px
+    }
+
+    .movie-details .movie-cover {
+        width: auto;
+        max-width: 80vw;
+        max-height: 80vh; 
+        justify-self: center;
+        margin-top: 24px;
+    }
+
+    .movie-details .movie-long-description {
+        margin-top: 24px;
+    }
+
+    .movie-details .movie-actors-list {
+        font-size: 20px;
+        margin-top: 24px
+    }
+
+    .movie-details .actions {
+        display: none
+    }
+}

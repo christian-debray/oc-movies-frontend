@@ -267,19 +267,27 @@
                 }
             }
 
-            function viewDetailsClickHandler(evt) {
+            document.addEventListener('click', (evt) => {
                 const tgt = evt.target
                 console.log("clicked", tgt)
+                // view details modal window controls
                 if (tgt.classList && tgt.classList.contains('btn') && tgt.dataset && tgt.dataset.movieId) {
-                    show_modal()
+                    show_modal();
+                    evt.stopPropagation();
                 }
                 if (tgt.classList && tgt.classList.contains('close')) {
-                    hide_modal()
+                    hide_modal();
+                    evt.stopPropagation();
                 }
-            }
-
-            document.addEventListener('click', (evt) => {
-                viewDetailsClickHandler(evt)
+                // dropdown list controls
+                if (tgt.classList && tgt.classList.contains('dropdown-item')) {
+                    const dropdown = tgt.parentElement
+                    selected = dropdown.querySelector('.dropdown-item[data-selected="1"]')
+                    if (selected) {
+                        selected.dataset.selected = "0"
+                    }
+                    tgt.dataset.selected = "1"
+                }
             })
         </script>
     </body>

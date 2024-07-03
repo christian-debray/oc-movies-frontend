@@ -160,15 +160,14 @@ header h1 {
     background-color: #fff;
     font-weight: 600;
     list-style-type: none;
+    display: none;
 }
 
 .dropdown:hover {
     position: absolute;
-    z-index: 10
-}
-
-.dropdown .dropdown-item {
-    display: none;
+    z-index: 10;
+    max-height: 40vh;
+    overflow-y: scroll;
 }
 
 .dropdown:hover .dropdown-item {
@@ -185,6 +184,7 @@ header h1 {
     display: block;
     content: "✅";
     float: right;
+    margin-left: 24px;
 }
 
 .dropdown .dropdown-item:hover {
@@ -365,6 +365,10 @@ header h1 {
         margin-left: 24px;
     }
 
+    .dropdown:hover {
+        max-height: calc(82px*4)
+    }
+
     .dropdown .dropdown-item {
         font-size: 36px;
         padding: 8px 19px 19px 19px;
@@ -541,10 +545,14 @@ header h1 {
         margin-left: 18px;
     }
 
+    .dropdown:hover {
+        max-height: calc(67px*4)
+    }
+
     .dropdown .dropdown-item {
         font-size: 36px;
         padding: 6px 11px;
-        min-width: 229px;
+        min-width: 300px;
     }
 
     .dropdown .dropdown-item[data-selected="1"]:after {

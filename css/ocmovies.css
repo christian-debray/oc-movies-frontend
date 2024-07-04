@@ -232,25 +232,32 @@ header h1 {
     z-index: 20
 }
 
-.modal-window-content {
+.modal-window-frame {
     display: block;
     margin: 4vh auto;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow-y: scroll;
     background-color: #fff;
     opacity: 1;
     border: solid 6px black;
+}
+
+.modal-window-inner {
+    overflow-y: scroll;
+    padding: 6px;
+    max-width: 90vw;
+    max-height: 80vh;
 }
 
 .modal-window .close.handheld {
     display: none
 }
 
-.movie-details {
+.modal-window-frame .actions {
     padding: 6vh 3vw;
-    display: grid;
     font-weight: 300;
+}
+
+.movie-details {
+    display: grid;
 }
 
 .movie-details .movie-meta-info {
@@ -277,7 +284,7 @@ header h1 {
     grid-area: actors;
 }
 
-.movie-details .actions {
+.modal-window-frame .actions {
     grid-area: actions;
 }
 
@@ -406,9 +413,18 @@ header h1 {
         margin-top: 2px;
     }
 
-    .modal-window-content {
+    .modal-window-frame {
         max-width: 840px;
         max-height: 80vh;
+    }
+
+    .modal-window-frame .actions {
+        text-align: center;
+        padding: 12px;
+    }
+
+    .modal-window-inner {
+        max-height: 70vh;
     }
 
     .movie-details {
@@ -417,8 +433,7 @@ header h1 {
         grid-template-areas:
             "header pic"
             "descr descr"
-            "actors actors"
-            "actions actions";
+            "actors actors";
     }
 
     .movie-details .movie-header h2 {
@@ -449,12 +464,11 @@ header h1 {
         margin-top: 48px
     }
 
-    .movie-details .actions {
-        margin-top: 48px;
+    .modal-window-frame .actions {
         text-align: center;
     }
 
-    .movie-details .actions .btn {
+    .modal-window-frame .actions .btn {
         height: 36px;
         width: 214px;
     }
@@ -590,16 +604,20 @@ header h1 {
         margin-top: 8px;
     }
 
-    .modal-window-content {
+    .modal-window-frame {
         max-width: 90vw;
         max-height: 80vh;
+    }
+
+    .modal-window-inner {
+        max-height: 70vh;
     }
 
     .modal-window .close.handheld {
         display: block;
         position: absolute;
         top: 6vh;
-        right: 5vw;
+        right: 6vw;
         z-index: 50;
         background-color: #fff;
         padding: 2px
@@ -649,7 +667,7 @@ header h1 {
         margin-top: 24px
     }
 
-    .movie-details .actions {
+    .modal-window-frame .actions {
         display: none
     }
 }
@@ -821,16 +839,20 @@ header h1 {
         margin-top: 8px;
     }
 
-    .modal-window-content {
+    .modal-window-frame {
         max-width: 90vw;
         max-height: 80vh;
+    }
+
+    .modal-window-inner {
+        max-height: 70vh;
     }
 
     .modal-window .close.handheld {
         display: block;
         position: absolute;
         top: 6vh;
-        right: 5vw;
+        right: 6vw;
         z-index: 50;
         background-color: #fff;
         padding: 2px
@@ -881,7 +903,7 @@ header h1 {
         margin-top: 24px
     }
 
-    .movie-details .actions {
+    .modal-window-frame .actions {
         display: none
     }
 }

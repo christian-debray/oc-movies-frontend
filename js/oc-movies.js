@@ -138,7 +138,8 @@
         constructor(movieJSON) {
             this._data = movieJSON;
             this.title = this._getAttr('title', '?');
-            this.image_url = this._getAttr('image_url', null);
+            // this.image_url = this._getAttr('image_url', null);
+            this.image_url = "../img/movie_cover.png";
             this.description = this._getAttr('description', '');
             this.id = this._getAttr('id', null);
             this.year = this._getAttr('year', '-');
@@ -161,11 +162,11 @@
         }
     }
 
-    function renderMovieOverview(movieData, slotSelector) {
+    function renderMovieOverview(rawMovieData, slotSelector) {
+        let movieData = new MovieDataFacade(rawMovieData);
         let tpl = document.getElementById('movie-overview-tpl').content.cloneNode(true);
         tpl.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
         tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
-        // tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
         tpl.querySelector("slot[name=title]").textContent = movieData.title;
         tpl.querySelector("slot[name=description]").textContent = movieData.description;
         tpl.querySelector(".actions .btn").dataset.movieId = movieData.id;
@@ -173,11 +174,11 @@
         slot.replaceChildren(tpl)
     }
 
-    function renderMovieCard(movieData) {
+    function renderMovieCard(rawMovieData) {
+        let movieData = new MovieDataFacade(rawMovieData);
         let cardTpl = document.getElementById('movie-card-tpl').content;
         let card = cardTpl.cloneNode(true);
         card.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
-        // card.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
         card.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
         card.querySelector("slot[name=title]").textContent = movieData.title;
         card.querySelector(".btn").dataset.movieId = movieData.id;
@@ -229,10 +230,9 @@
         movieDetailsNode.querySelector("slot[name='directors']").textContent = movieData.directors.join(', ');
         movieDetailsNode.querySelector(".movie-cover").setAttribute('alt', `Cover: ${movieData.title}`);
         movieDetailsNode.querySelector(".movie-cover").setAttribute('src', movieData.image_url);
-        // movieDetailsNode.querySelector(".movie-cover").setAttribute('src', "../img/movie_cover.png");
         movieDetailsNode.querySelector("slot[name='long_description']").textContent = movieData.long_description;
         movieDetailsNode.querySelector("slot[name='actors']").textContent = movieData.actors.join(', ');
-        modalRootNode = document.getElementById('movie-details-window');
+        modalRootNode = document.querySelector('#movie-details-window .modal-window-inner');
         modalRootNode.replaceChildren(movieDetailsNode);
         show_modal();
     }
@@ -312,7 +312,7 @@
         // custom category
         api.fetchAllGenres().then((data) => {
             renderCategorySelector(data, "#custom-category slot[name=category-selector]");
-            let dropdown = document.querySelector("#custom-category .dropdown")
+            let dropdown = document.querySelector("#custom-category .dropdown");
             selector = new CategorySelectorDropdown(data, dropdown);
             // bindings: load category contents when the user selects a new category.
             selector.onSelectionChanged = ((api) => (catName) => {

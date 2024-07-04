@@ -102,7 +102,6 @@
                 let chunk = await chunkPromise.json()
                 if (chunk && chunk.results) {
                     for (let i = 0; i < chunk.results.length; i++) {
-                        this._cacheMovie(chunk.results[i])
                         if (movieList.length + 1 <= limit) movieList.push(chunk.results[i])
                     }
                     uri = chunk.next;
@@ -126,16 +125,47 @@
                     throw Error(`Failed to fetch movie details from ${uri}`)
                 }
                 if (detailsPromise) details = await detailsPromise.json();
+                this._cacheMovie(details);
             }
             return details;
+        }
+    }
+
+    /**
+     * A facade object wrapping the raw movie data received form the API.
+     */
+    class MovieDataFacade {
+        constructor(movieJSON) {
+            this._data = movieJSON;
+            this.title = this._getAttr('title', '?');
+            this.image_url = this._getAttr('image_url', null);
+            this.description = this._getAttr('description', '');
+            this.id = this._getAttr('id', null);
+            this.year = this._getAttr('year', '-');
+            this.genres = this._getAttr('genres', []);
+            this.rated = this._getAttr('rated', '-');
+            this.long_description = this._getAttr('long_description', '-');
+            this.countries = this._getAttr('countries', []);
+            this.imdb_score = this._getAttr('imdb_score', '-');
+            this.duration = this._getAttr('duration', '-');
+            this.directors = this._getAttr('directors', []);
+            this.actors = this._getAttr('actors', []);
+        }
+
+        _getAttr(attr, repl) {
+            if (attr in this._data) {
+                return this._data[attr];
+            } else {
+                return repl
+            }
         }
     }
 
     function renderMovieOverview(movieData, slotSelector) {
         let tpl = document.getElementById('movie-overview-tpl').content.cloneNode(true);
         tpl.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
-        // tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
-        tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
+        tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
+        // tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
         tpl.querySelector("slot[name=title]").textContent = movieData.title;
         tpl.querySelector("slot[name=description]").textContent = movieData.description;
         tpl.querySelector(".actions .btn").dataset.movieId = movieData.id;
@@ -146,8 +176,8 @@
     function renderMovieCard(movieData) {
         let cardTpl = document.getElementById('movie-card-tpl').content;
         let card = cardTpl.cloneNode(true);
-        // card.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
-        card.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
+        card.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
+        // card.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
         card.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
         card.querySelector("slot[name=title]").textContent = movieData.title;
         card.querySelector(".btn").dataset.movieId = movieData.id;
@@ -183,6 +213,28 @@
             itemsContainer.appendChild(itemNode);
         }
         document.querySelector(slotSelector).replaceChildren(selectorNode);
+    }
+
+    function displayMovieDetailsModal(movieJSONData) {
+        hide_modal();
+        let movieData = new MovieDataFacade(movieJSONData);
+        movieDetailsNode = document.getElementById('modal-movie-details-tpl').content.cloneNode(true);
+        movieDetailsNode.querySelector("[slot='movie-title']").textContent = movieData.title;
+        movieDetailsNode.querySelector("[slot='year']").textContent = movieData.year;
+        movieDetailsNode.querySelector("[slot='movie-genre-list']").textContent = movieData.genres.join(', ');
+        movieDetailsNode.querySelector("slot[name='rated']").textContent = movieData.rated;
+        movieDetailsNode.querySelector("slot[name='duration']").textContent = movieData.duration;
+        movieDetailsNode.querySelector("slot[name='countries']").textContent = movieData.countries.join(' / ');
+        movieDetailsNode.querySelector("slot[name='imdb_score']").textContent = movieData.imdb_score;
+        movieDetailsNode.querySelector("slot[name='directors']").textContent = movieData.directors.join(', ');
+        movieDetailsNode.querySelector(".movie-cover").setAttribute('alt', `Cover: ${movieData.title}`);
+        movieDetailsNode.querySelector(".movie-cover").setAttribute('src', movieData.image_url);
+        // movieDetailsNode.querySelector(".movie-cover").setAttribute('src', "../img/movie_cover.png");
+        movieDetailsNode.querySelector("slot[name='long_description']").textContent = movieData.long_description;
+        movieDetailsNode.querySelector("slot[name='actors']").textContent = movieData.actors.join(', ');
+        modalRootNode = document.getElementById('movie-details-window');
+        modalRootNode.replaceChildren(movieDetailsNode);
+        show_modal();
     }
 
     /**
@@ -226,6 +278,20 @@
         }
     }
 
+    function show_modal() {
+        let modal = document.getElementById('movie-details-window')
+        if (!modal.classList.contains("displayed")) {
+            modal.classList.add("displayed")
+        }
+    }
+
+    function hide_modal() {
+        let modal = document.getElementById('movie-details-window')
+        if (modal.classList.contains("displayed")) {
+            modal.classList.remove("displayed")
+        }
+    }
+
     function init() {
         let api = new OCMoviesAPI('http://127.0.0.1:8000/api/v1/');
         // top movies
@@ -248,14 +314,15 @@
             renderCategorySelector(data, "#custom-category slot[name=category-selector]");
             let dropdown = document.querySelector("#custom-category .dropdown")
             selector = new CategorySelectorDropdown(data, dropdown);
+            // bindings: load category contents when the user selects a new category.
             selector.onSelectionChanged = ((api) => (catName) => {
-                    api.fetchTopMovies(6, catName).then((data) => renderMovieList(data, "#custom-category slot[name='movie-list']"))
+                api.fetchTopMovies(6, catName).then((data) => renderMovieList(data, "#custom-category slot[name='movie-list']"))
             })(api);
-            // bind click on an option to selector.electOption:
+            // bind click on an option to selector.selectOption():
             dropdown.addEventListener("click", ((selector) =>
                 (evt) => {
                     item = evt.target;
-                    if (item.classList.contains('dropdown-item')) {
+                    if (item.classList && item.classList.contains('dropdown-item')) {
                         evt.stopPropagation();
                         selector.selectOption(item.dataset.genreName);
                     }
@@ -263,6 +330,37 @@
             );
             selector.selectOption(0);
         });
+        // bind clicks on buttons
+        document.addEventListener("click", ((api) => {
+            return (evt) => {
+                tgt = evt.target;
+                if (tgt.classList && tgt.classList.contains('btn') && tgt.hasAttribute('data-movie-id')) {
+                    // view movie details button
+                    api.fetchMovieDetails(tgt.dataset.movieId).then((movieData) => { displayMovieDetailsModal(movieData) });
+                    evt.stopPropagation();
+                }
+                // dismiss modal window button
+                if (tgt.classList && tgt.classList.contains('close')) {
+                    hide_modal();
+                }
+                // see more button
+                if (tgt.classList && tgt.classList.contains('more')) {
+                    const card_list = tgt.closest('.movie-list');
+                    if (card_list && card_list.classList && !card_list.classList.contains("full")) {
+                        card_list.classList.add("full")
+                    }
+                    evt.stopPropagation();
+                }
+                // see less button
+                if (tgt.classList && tgt.classList.contains('less')) {
+                    const card_list = tgt.closest('.movie-list');
+                    if (card_list && card_list.classList && card_list.classList.contains("full")) {
+                        card_list.classList.remove("full")
+                    }
+                    evt.stopPropagation();
+                }
+            }
+        })(api));
     }
 
     document.addEventListener('DOMContentLoaded', init);

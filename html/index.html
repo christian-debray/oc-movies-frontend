@@ -15,24 +15,25 @@
             <header>
                 <h1>Vidéos à la demande</h1>
             </header>
-            <section id="topfilm">
+            <section id="best-movie-overview">
                 <h2>Meilleur film</h2>
+                <slot name="movie-overview"></slot>
             </section>
             <section class="movie-list" id="top-movies">
                 <h2>Films les mieux notés</h2>
+                <slot name="movie-list"></slot>
             </section>
             <section class="movie-list" id="category-1">
-                <h2>Catégorie 1</h2>
+                <h2><slot name="category-name">Catégorie 1</slot></h2>
+                <slot name="movie-list"></slot>
             </section>
             <section class="movie-list" id="category-2">
-                <h2>Catégorie 2</h2>
+                <h2><slot name="category-name">Catégorie 2</slot></h2>
+                <slot name="movie-list"></slot>
             </section>
             <section class="movie-list" id="custom-category">
-                <div class="category-selector">
-                    <h2>Autres: </h2>
-                    <ul class="dropdown">
-                    </ul>
-                </div>
+                <slot name="category-selector"></slot>
+                <slot name="movie-list"></slot>
             </section>
             <div class="modal-window" id="movie-details-window">
             </div>
@@ -55,6 +56,7 @@
         <!-- Movie cards list -->
         <template id="movie-list-tpl">
             <div class="thumbnails-list">
+                <slot name="cards-list"></slot>
             </div>
             <div class="actions see-more">
                 <span class="btn red more">Voir plus</span>
@@ -73,9 +75,19 @@
             </div>
         </template>
 
+        <!-- Category Selector Template -->
+         <template id="category-selector">
+            <div class="category-selector">
+                <h2><slot name="selector-title">Autres :</slot></h2>
+                <ul class="dropdown">
+                    <slot name="selector-items"></slot>
+                </ul>
+            </div>
+         </template>
+
         <!-- Category Selector Dropdown Item -->
         <template id="category-selector-item">
-            <li class="dropdown-item" data-genre-id="" data-selected="0"><slot name="genre"></slot></li>
+            <li class="dropdown-item" data-genre-name="" data-selected="0">GENRE</li>
         </template>
 
         <!-- Movie details tpl -->

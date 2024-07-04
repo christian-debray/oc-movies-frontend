@@ -17,14 +17,13 @@
 
         _findInCache(movieID) {
             let key = this._movieCacheKey(movieID);
-            if (! (key in this._movieCache)) return null;
-            console.log(`found in cache: ${key}`);
+            if (!(key in this._movieCache)) return null;
             return this._movieCache[key]
         }
 
         _cacheMovie(movieDetails) {
             let key = this._movieCacheKey(movieDetails.id)
-            if (! this._findInCache(key)) this._movieCache[key] = movieDetails;
+            if (!this._findInCache(key)) this._movieCache[key] = movieDetails;
         }
 
         /**
@@ -40,7 +39,7 @@
                 genres_fetch = await this._fetchGenresByPage(next_uri);
                 next_uri = genres_fetch.next
                 if (genres_fetch.results && genres_fetch.results.length) {
-                    for (let i=0; i < genres_fetch.results.length; i++) {
+                    for (let i = 0; i < genres_fetch.results.length; i++) {
                         genresList.push(genres_fetch.results[i].name)
                     }
                 }
@@ -55,7 +54,7 @@
          * @returns 
          */
         async _fetchGenresByPage(uri = null) {
-            if (! uri) uri = this.baseURL + 'genres/';
+            if (!uri) uri = this.baseURL + 'genres/';
             let genrePromise = await fetch(uri);
             if (!genrePromise.ok)
                 throw Error(`Failed to fetch genres list from ${uri}`);
@@ -71,10 +70,10 @@
          * @returns a promise with the number of available movies as an integer.
          */
         async countMoviesInGenre(genreName) {
-            if (! genreName) return 0;
+            if (!genreName) return 0;
             let uri = this.baseURL + 'titles/?genre=' + genreName;
             let movieTitlesPromise = await fetch(uri);
-            if (! movieTitlesPromise.ok) {
+            if (!movieTitlesPromise.ok) {
                 throw Error(`Failed to fetch movie titles from ${uri}`);
             }
             let moviesList = await movieTitlesPromise.json()
@@ -97,12 +96,12 @@
             while (uri && movieList.length <= limit && attempts > 0) {
                 attempts -= 1
                 let chunkPromise = await fetch(uri)
-                if (! chunkPromise.ok) {
+                if (!chunkPromise.ok) {
                     throw new Error(`Failed to fetch movie list from ${uri}`);
                 }
                 let chunk = await chunkPromise.json()
                 if (chunk && chunk.results) {
-                    for (let i = 0; i < chunk.results.length; i ++) {
+                    for (let i = 0; i < chunk.results.length; i++) {
                         this._cacheMovie(chunk.results[i])
                         if (movieList.length + 1 <= limit) movieList.push(chunk.results[i])
                     }
@@ -120,10 +119,10 @@
          */
         async fetchMovieDetails(movieID) {
             let details = this._findInCache(movieID);
-            if (! details) {
+            if (!details) {
                 let uri = this.baseURL + `titles/${movieID}`;
                 let detailsPromise = await fetch(uri);
-                if (! detailsPromise.ok) {
+                if (!detailsPromise.ok) {
                     throw Error(`Failed to fetch movie details from ${uri}`)
                 }
                 if (detailsPromise) details = await detailsPromise.json();
@@ -132,14 +131,138 @@
         }
     }
 
+    function renderMovieOverview(movieData, slotSelector) {
+        let tpl = document.getElementById('movie-overview-tpl').content.cloneNode(true);
+        tpl.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
+        // tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
+        tpl.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
+        tpl.querySelector("slot[name=title]").textContent = movieData.title;
+        tpl.querySelector("slot[name=description]").textContent = movieData.description;
+        tpl.querySelector(".actions .btn").dataset.movieId = movieData.id;
+        let slot = document.querySelector(slotSelector);
+        slot.replaceChildren(tpl)
+    }
+
+    function renderMovieCard(movieData) {
+        let cardTpl = document.getElementById('movie-card-tpl').content;
+        let card = cardTpl.cloneNode(true);
+        // card.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
+        card.querySelector("img.movie-cover-thumbnail").setAttribute("src", "../img/movie_cover.png");
+        card.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
+        card.querySelector("slot[name=title]").textContent = movieData.title;
+        card.querySelector(".btn").dataset.movieId = movieData.id;
+        return card;
+    }
+
+    function renderMovieList(movieListData, slotSelector) {
+        let listNode = document.getElementById('movie-list-tpl').content.cloneNode(true);
+        let cardsContainer = listNode.querySelector('slot[name=cards-list]');
+        for (let i = 0; i < movieListData.length; i++) {
+            let card = renderMovieCard(movieListData[i]);
+            cardsContainer.appendChild(card);
+        }
+        slot = document.querySelector(slotSelector);
+        slot.replaceChildren(listNode);
+    }
+
+    function renderCategory(catName, movieListData, categoryRootSelector) {
+        let categoryContainer = document.querySelector(categoryRootSelector);
+        categoryContainer.querySelector("slot[name=category-name]").textContent = catName;
+        renderMovieList(movieListData, `${categoryRootSelector} slot[name=movie-list]`)
+    }
+
+    function renderCategorySelector(categoryDataList, slotSelector, title = null) {
+        let selectorNode = document.getElementById('category-selector').content.cloneNode(true);
+        if (title) selectorNode.querySelector("slot[name=selector-title]").textContent = title;
+        let itemsContainer = selectorNode.querySelector("slot[name=selector-items]");
+        let itemTpl = document.getElementById("category-selector-item");
+        for (i = 0; i < categoryDataList.length; i++) {
+            let itemNode = itemTpl.content.cloneNode(true).querySelector('li');
+            itemNode.dataset.genreName = categoryDataList[i];
+            itemNode.textContent = categoryDataList[i];
+            itemsContainer.appendChild(itemNode);
+        }
+        document.querySelector(slotSelector).replaceChildren(selectorNode);
+    }
+
+    /**
+     * Small controller object for category selector dropdown lists.
+     * 
+     * Accepts a single handler to call when selected item changed.
+     */
+    class CategorySelectorDropdown {
+        constructor(dataList, view) {
+            this.options = dataList || new Array();
+            this.selectedIdx = -1;
+            this.view = view;
+            this.onSelectionChanged = null
+        }
+
+        optionIndex(optName) {
+            return this.options.findIndex((n) => (n === optName));
+        }
+
+        selectOption(nameOrIndex) {
+            let idx = 0;
+            idx = Number.isInteger(Number(nameOrIndex)) ? Number(nameOrIndex) : this.optionIndex(nameOrIndex);
+            if (idx >= 0 && idx !== self.selectedIdx) {
+                this.selectedIdx = idx;
+                this.updateView();
+                if (this.onSelectionChanged) {
+                    this.onSelectionChanged(this.options[this.selectedIdx])
+                }
+            }
+        }
+
+        updateView() {
+            if (!this.view) return;
+            let currSel = this.view.querySelector('.dropdown-item[data-selected="1"]');
+            if (currSel) currSel.dataset.selected = "0";
+            if (this.selectedIdx >= 0) {
+                let siblingIdx = this.selectedIdx + 1;
+                let item = this.view.querySelector(`.dropdown-item:nth-child(${siblingIdx})`);
+                if (item) item.dataset.selected = "1";
+            }
+        }
+    }
+
     function init() {
         let api = new OCMoviesAPI('http://127.0.0.1:8000/api/v1/');
-        api.fetchAllGenres().then((data) => console.log('GENRES', data));
+        // top movies
         api.fetchTopMovies(6).then((data) => {
-            console.log('TOP MOVIES', data);
-            api.fetchMovieDetails(data[0].id).then((movie) => console.log('BEST MOVIE', movie));
+            renderMovieList(data, "#top-movies slot[name=movie-list]");
+            api.fetchMovieDetails(data[0].id).then((movie) => {
+                renderMovieOverview(movie, '#best-movie-overview slot[name=movie-overview]');
+            });
         });
-        api.fetchTopMovies(6, "Drama").then((data) => console.log('DRAMA - TOP MOVIES', data));
+        // category 1
+        api.fetchTopMovies(6, "Drama").then((data) => {
+            renderCategory("Drama", data, "#category-1");
+        });
+        // category 2
+        api.fetchTopMovies(6, "Thriller").then((data) => {
+            renderCategory("Thriller", data, "#category-2");
+        });
+        // custom category
+        api.fetchAllGenres().then((data) => {
+            renderCategorySelector(data, "#custom-category slot[name=category-selector]");
+            let dropdown = document.querySelector("#custom-category .dropdown")
+            selector = new CategorySelectorDropdown(data, dropdown);
+            selector.onSelectionChanged = ((api) => (catName) => {
+                    api.fetchTopMovies(6, catName).then((data) => renderMovieList(data, "#custom-category slot[name='movie-list']"))
+            })(api);
+            // bind click on an option to selector.electOption:
+            dropdown.addEventListener("click", ((selector) =>
+                (evt) => {
+                    item = evt.target;
+                    if (item.classList.contains('dropdown-item')) {
+                        evt.stopPropagation();
+                        selector.selectOption(item.dataset.genreName);
+                    }
+                })(selector)
+            );
+            selector.selectOption(0);
+        });
     }
 
     document.addEventListener('DOMContentLoaded', init);

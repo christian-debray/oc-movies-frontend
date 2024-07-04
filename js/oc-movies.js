@@ -138,8 +138,8 @@
         constructor(movieJSON) {
             this._data = movieJSON;
             this.title = this._getAttr('title', '?');
-            // this.image_url = this._getAttr('image_url', null);
-            this.image_url = "../img/movie_cover.png";
+            this.image_url = this._getAttr('image_url', null);
+            // this.image_url = "../img/movie_cover.png";
             this.description = this._getAttr('description', '');
             this.id = this._getAttr('id', null);
             this.year = this._getAttr('year', '-');

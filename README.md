@@ -47,7 +47,7 @@ Setup the virtual environment and the API:
     python manage.py create_db
 ```
 
-Now start the server on port 8000:
+Now start the server on port 8000, **from the *API folder***:
 ```
     python manage.py runserver
 ```
@@ -62,7 +62,7 @@ Now install the front end in a different folder:
     git clone https://github.com/christian-debray/oc-movies-frontend.git ocmovies-frontend
 ```
 
-From the front-end folder, start another server. In our example, we'll use Python's built-in server to do so. Port 8000 is already used by the API server, so we'll use another port (for ex. 7800).
+**From the *front-end* folder**, start another server. In our example, we'll use Python's built-in server to do so. Port 8000 is already used by the API server, so we'll use another port (for ex. 7800).
 
 ```
     cd ocmovies-frontend

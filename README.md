@@ -2,7 +2,7 @@
 
 Project for the OpenClassrooms Python course.
 
-This project yields the front-end of a single page app, retrieving ist data from a movie-database API: OC-Movies-API-EN-FR.
+This project yields the front-end of a single page app for a movie-club. The app retrieves its data from a movie-database API: OC-Movies-API-EN-FR.
 
 see https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR
 

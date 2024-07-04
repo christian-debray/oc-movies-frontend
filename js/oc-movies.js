@@ -204,7 +204,7 @@
     function renderCategorySelector(categoryDataList, slotSelector, title = null) {
         let selectorNode = document.getElementById('category-selector').content.cloneNode(true);
         if (title) selectorNode.querySelector("slot[name=selector-title]").textContent = title;
-        let itemsContainer = selectorNode.querySelector("slot[name=selector-items]");
+        let itemsContainer = selectorNode.querySelector("[slot=selector-items]");
         let itemTpl = document.getElementById("category-selector-item");
         for (i = 0; i < categoryDataList.length; i++) {
             let itemNode = itemTpl.content.cloneNode(true).querySelector('li');

@@ -140,12 +140,13 @@ header h1 {
     display: inline-block;
 }
 
-.movie-gallery-thumbnail img.movie-cover-thumbnail {
-    object-fit: cover;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    bottom: 0;
+.movie-gallery-thumbnail {
+    position: relative;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-color: #2D2C2C;
 }
 
 .movie-gallery-thumbnail>div {
@@ -188,7 +189,7 @@ header h1 {
 .dropdown:hover,
 .dropdown:focus {
     position: absolute;
-    z-index: 10;
+    z-index: 50;
     max-height: 40vh;
     overflow-y: scroll;
 }
@@ -374,8 +375,6 @@ header h1 {
     .movie-gallery-thumbnail {
         width: 252px;
         height: 247px;
-        clip-path: rect(0 0 252px 247px);
-        position: relative
     }
 
     .movie-gallery-thumbnail>div {
@@ -565,8 +564,6 @@ header h1 {
     .movie-gallery-thumbnail {
         width: 296px;
         height: 286px;
-        clip-path: rect(0 0 296px 286px);
-        position: relative
     }
 
     .movie-gallery-thumbnail>div {
@@ -653,7 +650,7 @@ header h1 {
 
     .movie-details .movie-cover {
         width: auto;
-        max-height: 602px; 
+        max-height: 602px;
         justify-self: center;
         margin-top: 24px;
     }
@@ -771,8 +768,6 @@ header h1 {
     .movie-gallery-thumbnail {
         width: 100%;
         height: 318px;
-        clip-path: rect(0 0 100% 318px);
-        position: relative
     }
 
     .movie-gallery-thumbnail>div {
@@ -889,7 +884,7 @@ header h1 {
     .movie-details .movie-cover {
         width: auto;
         max-width: 80vw;
-        max-height: 80vh; 
+        max-height: 80vh;
         justify-self: center;
         margin-top: 24px;
     }

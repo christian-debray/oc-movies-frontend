@@ -178,8 +178,7 @@
         let movieData = new MovieDataFacade(rawMovieData);
         let cardTpl = document.getElementById('movie-card-tpl').content;
         let card = cardTpl.cloneNode(true);
-        card.querySelector("img.movie-cover-thumbnail").setAttribute("src", movieData.image_url);
-        card.querySelector("img.movie-cover-thumbnail").setAttribute("alt", `Cover: ${movieData.title}`);
+        card.querySelector('.movie-gallery-thumbnail').style.backgroundImage = `url('${movieData.image_url}')`;
         card.querySelector("slot[name=title]").textContent = movieData.title;
         card.querySelector(".btn").dataset.movieId = movieData.id;
         return card;
@@ -187,10 +186,10 @@
 
     function renderMovieList(movieListData, slotSelector) {
         let listNode = document.getElementById('movie-list-tpl').content.cloneNode(true);
-        let cardsContainer = listNode.querySelector('slot[name=cards-list]');
+        let cardsContainer = listNode.querySelector('div.thumbnails-list');
         for (let i = 0; i < movieListData.length; i++) {
             let card = renderMovieCard(movieListData[i]);
-            cardsContainer.appendChild(card);
+            cardsContainer.appendChild(card.children[0]);
         }
         slot = document.querySelector(slotSelector);
         slot.replaceChildren(listNode);
@@ -296,7 +295,7 @@
         let api = new OCMoviesAPI('http://127.0.0.1:8000/api/v1/');
         // top movies
         api.fetchTopMovies(6).then((data) => {
-            renderMovieList(data, "#top-movies slot[name=movie-list]");
+            renderMovieList(data, "#top-movies div.movie-list-slot");
             api.fetchMovieDetails(data[0].id).then((movie) => {
                 renderMovieOverview(movie, '#best-movie-overview slot[name=movie-overview]');
             });
